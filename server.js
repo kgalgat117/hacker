@@ -30,11 +30,16 @@ app.use(useragent.express());
 app.use(express.static(path.join(__dirname, 'dist/hacker')));
 
 // Connect to the database before starting the application server.
+mongoose.set('useCreateIndex', true)
+
 hacker_db = mongoose.createConnection(DB_Hacker, { useNewUrlParser: true })
 server.listen(process.env.PORT || 4200, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
 });
+
+exports.hacker_db = hacker_db
+
 
 var hackingRoute = require('./routes/hacking')
 
