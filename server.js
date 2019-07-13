@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'dist/hacker')));
 mongoose.set('useCreateIndex', true)
 
 hacker_db = mongoose.createConnection(DB_Hacker, { useNewUrlParser: true })
-server.listen(process.env.PORT || 4200, function () {
+server.listen(80, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
 });
