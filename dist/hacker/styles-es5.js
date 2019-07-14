@@ -557,7 +557,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/karan/Desktop/hacker/hacker/src/styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! E:\New folder (4)\hacker\src\styles.css */"./src/styles.css");
 
 
 /***/ })
