@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FacebookComponent } from './facebook/facebook.component';
+import { CloneComponent } from './clone/clone.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: 'login', component: FacebookComponent}
+  {path: '', redirectTo: '/clone', pathMatch: 'full'},
+  {path: 'login', component: FacebookComponent},
+  {path: 'clone', component: CloneComponent}
 ];
 
 @NgModule({
@@ -13,5 +15,6 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 export const routingComponents = [
- FacebookComponent
+ FacebookComponent,
+ CloneComponent
 ]
