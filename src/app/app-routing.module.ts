@@ -4,9 +4,9 @@ import { FacebookComponent } from './facebook/facebook.component';
 import { CloneComponent } from './clone/clone.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/clone', pathMatch: 'full'},
-  {path: 'login', component: FacebookComponent},
-  {path: 'clone', component: CloneComponent}
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
+  {path: 'clone', component: FacebookComponent},
+  {path: 'login', component: CloneComponent}
 ];
 
 @NgModule({
