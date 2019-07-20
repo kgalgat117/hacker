@@ -5,7 +5,7 @@ import { CloneComponent } from './clone/clone.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: 'clone', component: FacebookComponent},
+  {path: 'scrapper', component: FacebookComponent},
   {path: 'login', component: CloneComponent}
 ];
 

