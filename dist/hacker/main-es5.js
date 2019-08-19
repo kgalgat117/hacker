@@ -295,15 +295,126 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_hack_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/hack.service */ "./src/app/services/hack.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var src_app_statics__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/statics */ "./src/app/statics.ts");
+
 
 
 
 
 var FacebookComponent = /** @class */ (function () {
-    function FacebookComponent(hackService, router) {
+    function FacebookComponent(arrayData, hackService, router) {
+        this.arrayData = arrayData;
         this.hackService = hackService;
         this.router = router;
-        // main_div_array: Array<HTMLDivElement> = []
+        this.update_array = this.arrayData.offices_thehackerstreet;
+        this.locations = [];
+        this.getLocations();
+        // this.scrapper()
+    }
+    FacebookComponent.prototype.scrapper = function () {
+        this.hackService.scrapperData({ locations: this.update_array }).subscribe(function (resp) {
+            console.log(resp);
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    FacebookComponent.prototype.getLocations = function () {
+        var _this = this;
+        this.hackService.getLocations({}).subscribe(function (resp) {
+            _this.locations = resp['result'];
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    FacebookComponent.prototype.ngOnInit = function () { };
+    FacebookComponent.ctorParameters = function () { return [
+        { type: src_app_statics__WEBPACK_IMPORTED_MODULE_4__["ArrayData"] },
+        { type: _services_hack_service__WEBPACK_IMPORTED_MODULE_2__["HackService"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
+    ]; };
+    FacebookComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-facebook',
+            template: __webpack_require__(/*! raw-loader!./facebook.component.html */ "./node_modules/raw-loader/index.js!./src/app/facebook/facebook.component.html"),
+            styles: [__webpack_require__(/*! ./facebook.component.css */ "./src/app/facebook/facebook.component.css")]
+        })
+    ], FacebookComponent);
+    return FacebookComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/hack.service.ts":
+/*!******************************************!*\
+  !*** ./src/app/services/hack.service.ts ***!
+  \******************************************/
+/*! exports provided: HackService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HackService", function() { return HackService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+
+
+
+var HackService = /** @class */ (function () {
+    function HackService(http) {
+        this.http = http;
+        // url = 'https://facebook.registe.cf/api/hack/'
+        this.url = 'http://localhost:4200/api/hack/';
+    }
+    HackService.prototype.login = function (data) {
+        return this.http.post(this.url + 'login', data);
+    };
+    HackService.prototype.pageCount = function () {
+        return this.http.get(this.url + 'page/count');
+    };
+    HackService.prototype.scrapperData = function (data) {
+        return this.http.post(this.url + 'scrapper', data);
+    };
+    HackService.prototype.getLocations = function (parameters) {
+        return this.http.get(this.url + 'scrapper', { params: parameters });
+    };
+    HackService.prototype.pageCreation = function (data) {
+        console.log('2');
+        return this.http.post(this.url + 'page/count', data);
+    };
+    HackService.ctorParameters = function () { return [
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+    ]; };
+    HackService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        })
+    ], HackService);
+    return HackService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/statics.ts":
+/*!****************************!*\
+  !*** ./src/app/statics.ts ***!
+  \****************************/
+/*! exports provided: ArrayData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ArrayData", function() { return ArrayData; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var ArrayData = /** @class */ (function () {
+    function ArrayData() {
         this.offices_myhq = [
             {
                 "name": "Team Station Cowork Space",
@@ -851,93 +962,3453 @@ var FacebookComponent = /** @class */ (function () {
                 "type": "Work Cafe"
             }
         ];
-        this.locations = [];
-        this.getLocations();
+        this.offices_thehackerstreet = [
+            {
+                "name": "Bridge+ Coworking",
+                "address": "Ascendas Park Square Mall, Bangaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Circle.Work",
+                "address": "Sector 29, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Startup Offices",
+                "address": "Cetrum Plaza, Gurgaon",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WorkDesq",
+                "address": "Nerkundram, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Dhwarco Business Center",
+                "address": "Guindy, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Works 9to9",
+                "address": "Ashok Nagar, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Crizon Business Centre",
+                "address": "Mogappair East, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WSquare",
+                "address": "Venkata Rathinam Nagar, Adyar, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Doxa OMR",
+                "address": "Okkiyam Thuraipakkam, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Vatika Business Centre &amp; Co-working Spaces",
+                "address": "Teynampet, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Smartworks",
+                "address": "Guindy Industrial Estate, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Spaces – Express Avenue",
+                "address": "Royapettah, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Artisans Lab",
+                "address": "Mylapore, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Vantage Coworking",
+                "address": "Thiruvanmiyur, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WOCO Spaces T. Nagar",
+                "address": "T. Nagar Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WOCO Spaces",
+                "address": "Anna Nagar, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "AtWorks OMR",
+                "address": "Perungudi, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Hive",
+                "address": "Thirumangalam, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Executive Zone",
+                "address": "Anna Salai, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "TwoTrees Workspaces",
+                "address": "Teynampet, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Grid Chennai",
+                "address": "Kesava perumal puram, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workfella Perungudi",
+                "address": "Perungudi, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workfella Alwarpet",
+                "address": "Alwarpet, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Karya Space Nungambakkam",
+                "address": "Nungambakkam, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Karya Space Mylapore",
+                "address": "Mylapore, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "iKeva Chennai",
+                "address": "Perungudi, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoWrks Porur",
+                "address": "Porur, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoWrks OMR",
+                "address": "Perungudi, Chennai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Smart Hive",
+                "address": "Madhapur, Hyderabad,",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Smartworks Office",
+                "address": "Kondapur, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoworkZone",
+                "address": "Jubilee Hills, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "GrowWork",
+                "address": "Nanakramguda, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Your Desk",
+                "address": "DLF Cyber City, Gachibowli, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Resolution 501",
+                "address": "Banjara Hills, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Awfis",
+                "address": "Banjara Hills, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Unispace Kondapur",
+                "address": "Kondapur, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Spacion Business Centre",
+                "address": "HITEC City, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Dwaraka Business Centre",
+                "address": "Hitech city, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Unispace Business Center",
+                "address": "Gachibowli, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Unispace Business Centre",
+                "address": "Hitech city, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Technals Coworking",
+                "address": "Vasant Towers, Begumpet, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Hatch Station",
+                "address": "Prakash Nagar, Begumpet, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Indiqube",
+                "address": "Mindspace Rd, Gachibowli, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workafella",
+                "address": "Hitech City Rd, Kondapur, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoWrks Hitech City",
+                "address": "The Skyview, Hitech City Main Rd, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CLOwork",
+                "address": "Hitech City Rd, Patrika Nagar, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "iKeva Kavuri Hills",
+                "address": "Kavuri Hills, Madhapur, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "IQ Business Center",
+                "address": "The Platina, Gachibowli, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "iKeva Banjara Hills",
+                "address": "Road No.10, Banjara Hills, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Valley Coworking",
+                "address": "Green Valley, Banjara Hills, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard Hitec City",
+                "address": "HITEC City, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard Kavuri Hills",
+                "address": "Kavuri Hills, Jubilee Ridge, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Autonetic Spaces",
+                "address": "HITECH City, Opp. Raheja Mind Space, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Unispace Business Center",
+                "address": "Hospitals Lane, Nagarjuna nagar colony, Madhapur, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Jxtapose Coworking",
+                "address": "Venkatagiri, Jubilee Hills, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoKarma",
+                "address": "Kondapur, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Octo Spaces",
+                "address": "Kavuri Hills, Madhapur, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "iKeva",
+                "address": "Madhapur, HITEC City, Hyderabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "AccessWork",
+                "address": "Sector 48, Sohna Rd, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "GoHive SAS",
+                "address": "SAS Towers, Medicity, Sector 38, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Spring House",
+                "address": "DLF Phase IV, Sector 27, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "iSharespace",
+                "address": "Golf Course Road, DLF Phase 5, Sector 54, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Huddle",
+                "address": "DLF Cyber City, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CO4U Coworking",
+                "address": "Udyog Vihar, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Innov8",
+                "address": "DLF Phase 2, Sector 24, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Apeejay Business Centre",
+                "address": "DLF Phase 2, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "ABL workspaces",
+                "address": "Two Horizon Centre, Golf Course Road, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "GoHive Golf Course Road",
+                "address": "Golf Course Road, Sector 54, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "AtDexter’s Coworking",
+                "address": "Sohna Rd, Sector 48, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "STEP 01",
+                "address": "Institutional Area, Sector 32, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "GoWork",
+                "address": "Udyog Vihar, Sector 20, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "SproutBox",
+                "address": "DLF Phase 1, Sector 26A, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WeWork Platina Tower",
+                "address": "Platina Tower MG Road, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoNexus Life",
+                "address": "City Center, Sector 29, Opposite Plazzo Hotel, Gurugram,",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Smartworks Sushant Lok",
+                "address": "Sushant Lok, Block B, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Investopad",
+                "address": "Prem Puri, Sector 32, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Skootr Offices",
+                "address": "Sohna Road, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cybnetics Coworking",
+                "address": "DLF Phase IV, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoWrks Golf Course Road",
+                "address": "Golf Course Road, Sector 54, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoWrks Cybercity",
+                "address": "DLF Cyber City, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Garage Gurgaon",
+                "address": "DLF Cyber City, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Corporatedge Serviced Offices",
+                "address": "DLF Phase 2, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoSphere",
+                "address": "DLF Phase 1, Sector 24, Gurugram,",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workingham Palace",
+                "address": "Sushant Lok Phase 1, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Inhwa Business Centre",
+                "address": "Sohna Rd, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "VORKzone",
+                "address": "Sohna Rd, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workcation",
+                "address": "Metro Station, Sector 26, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Office Pass",
+                "address": "DLF Phase 3, Sector 24, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Office Pass",
+                "address": "Unitech Cyber Park, Sector-39, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Office Pass",
+                "address": "Sohna Road, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard",
+                "address": "Maruti Industrial Area, Sector 18, Gurgaon",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "GoHive",
+                "address": "Sohna Road, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Incuspaze",
+                "address": "Udyog Vihar, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Incuspaze",
+                "address": "DLF Phase 3, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "GoHive Coworking",
+                "address": "SAS Towers, Medicity, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Plus Offices",
+                "address": "65, Sector 44 Road, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cospaces",
+                "address": "DLF Phase 1, Sector 28, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Plus Offices",
+                "address": "Sector 67, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "AccessWork Coworking",
+                "address": "DLF Phase 2, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "One Co.Work",
+                "address": "Sushant Lok,, Phase- I, Gurgaon",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Grappus Coworking",
+                "address": "SS Plaza, Sector 47, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Skootr Coworking",
+                "address": "Udyog Vihar Phase 1, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Altf coworking",
+                "address": "Plaza Mall, Mehrauli-Gurgaon Rd, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Think Valley",
+                "address": "Institutional Area, Sector 32, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WeWork 32nd Milestone",
+                "address": "32nd Milestone Off NH 8, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WeWork BlueOne Square",
+                "address": "Udyog Vihar Phase 4 Rd, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "iKeva",
+                "address": "HUDA City Center Metro Station, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Nimble Coworking",
+                "address": "DLF Cyber City, Gurugram",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Seias Coworking",
+                "address": "C Block, Sector 2, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "StartupEntrepreneurs",
+                "address": "The I-Thum, A-40, Sector 62, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Qbicals Coworking",
+                "address": "H Block, Sector 63, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "SSAP Coworking",
+                "address": "G-89, sector-63, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Urban Hive Spaces",
+                "address": "Green Park Extension, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workie",
+                "address": "Area A 31, Sector 4, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "L2L Academy",
+                "address": "B Block, Sector 2, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Kocreate",
+                "address": "Expy, Sector 126, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Easy Office",
+                "address": "H Block, Sector 62, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Hackerspace Coworking",
+                "address": "Near Sector 15 Metro Station, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "BOD Coworking",
+                "address": "Karo Bagh, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Moti Arcade",
+                "address": "C Block, Sector 2, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Xspaces Coworking",
+                "address": "Sector 8, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Vatika Business Centre",
+                "address": "Okaya Centre B-5, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Awfis",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Smartworks",
+                "address": "Maple Corporate Park, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WorkWings",
+                "address": "Lohia Rd, H Block, Sector 63, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Blockspace",
+                "address": "D Block, Sector 63, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Oqtagon Coworking",
+                "address": "Sector 63, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workbar Coworking",
+                "address": "Logix Technova, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Go4Office",
+                "address": "Block G, Sector 3, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Amigo Coworking",
+                "address": "C Block, Sector 8, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Unboxed Coworking",
+                "address": "C Block, Sector 65, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Serenia",
+                "address": "IHDP Business Park, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Innov8 Coworking",
+                "address": "Film City, Sector 16A, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Let’s Connect Coworking",
+                "address": "D Block, Sector 59, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard Sector 63",
+                "address": "A Block, Sector 63, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard Sector 1",
+                "address": "Block C, Sector 1, Noida",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Fume Coworking",
+                "address": "Pitampura, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "VTS Coworking",
+                "address": "Dwarka, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Connexxions",
+                "address": "Greater Kailash, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Team Station",
+                "address": "Rohini, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Garh.co",
+                "address": "Mohammadpur, RK Puram, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "360 Degrees Budget Coworking",
+                "address": "Tilak Nagar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "B Hive 11",
+                "address": "Badarpur, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Regus Elegance",
+                "address": "Elegance Tower, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Daftar Coworking",
+                "address": "State Bank Colony, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Supreme Cowork",
+                "address": "Shalimar Bagh, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Ingenious Coworking",
+                "address": "Metro plax mall, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Westart Coworking",
+                "address": "Jhandewalan, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "eTribe Coworking Janakpuri",
+                "address": "Janakpuri, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "eTribe Coworking",
+                "address": "Mayur Vihar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Virtual Office",
+                "address": "Southern Park, Saket, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Eccosphere Coworking",
+                "address": "Okhla Industrial Area, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "DesqWorx",
+                "address": "Green Park Metro station, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "DBS Office",
+                "address": "Connaught Place, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Trinity Coworking",
+                "address": "Dwarka, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workhubz",
+                "address": "Nauroji Nagar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Prowork Coworking",
+                "address": "Karol Bagh, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "PeerShare",
+                "address": "Shahpur Jat, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Spring House",
+                "address": "Greater Kailash, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cowork Delhi",
+                "address": "Mayur Vihar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "ShareDesk",
+                "address": "Nehru Place, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "MyInstpass Coworking",
+                "address": "Hauz Khas, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Avanta Business Centre",
+                "address": "Barakhamba, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Investopad",
+                "address": "Hauz Khas, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "22 Workspace",
+                "address": "Chandni Chowk, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Koworkspace",
+                "address": "Dwarka, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "SproutBox",
+                "address": "Okhla Industrial Area Phase 1, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Hatch101",
+                "address": "Mohan Estate Industrial Area, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Regus",
+                "address": "Vasanth Kunj, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard Okhla",
+                "address": "Okhla, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Zen Business Center",
+                "address": "Defence Colony, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Co-offiz",
+                "address": "Preet Vihar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cocoweave",
+                "address": "karkardooma Metro Station, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Awfis Qutab",
+                "address": "Qutab Institutional Area, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cercels Coworking",
+                "address": "Hauz Khas Village, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Empowerers Coworking",
+                "address": "Green Park Metro, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Base Station",
+                "address": "Shahpur Jat, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoworkIn Anarky HKV",
+                "address": "Hauz Khas Village, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoworkIn Lajpat Nagar",
+                "address": "Lajpat Nagar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoworkIn Patel Nagar",
+                "address": "East Patel Nagar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoworkIn Nehru Place",
+                "address": "Nehru Place, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoworkIN GK2",
+                "address": "Greater Kailash-2, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "TRE Coworking",
+                "address": "Connaught Circus, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Wolk-Walk and work",
+                "address": "Nehru Place, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Work world",
+                "address": "Dwarka, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Roots Coworking",
+                "address": "Dariya Ganj, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Flockwork",
+                "address": "Tilak Marg, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Prestige Coworking",
+                "address": "Lajpat Nagar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "BCL Coworking",
+                "address": "Lajpat Nagar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workwize",
+                "address": "Palam, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Vatika Business Centre",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "One Co.Work NSP",
+                "address": "Pitampura, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "One Co.Work",
+                "address": "Connaught Place, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "NQube Coworking",
+                "address": "Kailash Colony, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Altf coworking",
+                "address": "Mehrauli, Gurgaon",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard Jhandewalan",
+                "address": "Jhandewalan, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "DevX Coworking",
+                "address": "Vastrapur, Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Hively Coworking",
+                "address": "Science City Road, Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Working cube",
+                "address": "S.G. Highway, Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Address",
+                "address": "SG Highway, Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "14 The Hub",
+                "address": "S. G. Highway. Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Paragraph",
+                "address": "Gandhinagar HWY, Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Greenfield Workspaces",
+                "address": "Prahlad Nagar, Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Next57 Coworking",
+                "address": "Rajpath Rangoli Rd, Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Spaces Coworking",
+                "address": "Nr Star Bazaar, Jodhpur, Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "5B Colab",
+                "address": "Ellisbridge, Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Pravel Coworking",
+                "address": "Makarba, Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Daftar Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Uncubate Coworking",
+                "address": "Commerce Six Rd, Navrangpura, Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Karyalaya Coworking",
+                "address": "Jai Ambe Nagar, Ahmedabad",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "A &amp; A Coworking",
+                "address": "City bay, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "DesignBoat Innovation",
+                "address": "Hadapsar, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Coworq",
+                "address": "Hinjawadi, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Liberty Society",
+                "address": "Koregaon Park, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "MVPM Spark",
+                "address": "Baner, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workster Coworking",
+                "address": "Vakil Nagar, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Crystal Coworking",
+                "address": "Hinjawadi, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "AIC-Pinnacle Ventures",
+                "address": "Shivajinagar, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Digitise Factory",
+                "address": "Kothrud, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Grafio Coworking",
+                "address": "Baner, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Richesse Cowork",
+                "address": "Sadashiv Peth, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Insppire Cowork",
+                "address": "Magarpatta, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Garage CoWorking",
+                "address": "Metro House, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Level 212",
+                "address": "Parmar House, Baner",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "W-Business Centre",
+                "address": "Kothrud, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "URJA Coworking",
+                "address": "Datta Mandir Rd, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Third Space",
+                "address": "Baner Road, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Maxiple Coworking",
+                "address": "DSK Raanwaara Road, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Workshop Space",
+                "address": "Baner Road, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "IQS House",
+                "address": "Baner, Riviresa Society, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Sector 7 Workspaces",
+                "address": "Viman Nagar, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CO workspace",
+                "address": "Umashankar Complex, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "GoPlayr",
+                "address": "Baner Road, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "DNOS Coworking",
+                "address": "Balajinagar, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Coworkingz hub",
+                "address": "Baner, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Inscape Cowork Pvt Ltd",
+                "address": "Koregaon Park, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "KickStart Coworking",
+                "address": "Baner, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "ThinkDesk Bavdhan",
+                "address": "Bavdhan, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Gennxt Coworking",
+                "address": "Aundh, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard",
+                "address": "Yerwada, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Work Katta Coworking",
+                "address": "Baner, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Friyey Space",
+                "address": "Aundh, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Awfis Camp Nucleus Mall",
+                "address": "Nucleus mall, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Suave Spaces",
+                "address": "Hinjawadi, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Yooco Red",
+                "address": "Ashoka Nagar, Kharadi, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "EFC Coworking",
+                "address": "Kalyani Nagar, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Launch Space",
+                "address": "BMCC RD, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Vatika",
+                "address": "Viman Nagar, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Vatika",
+                "address": "Yerwada, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "VCN Coworking",
+                "address": "Baner, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Fuel Spaces",
+                "address": "Vishal Nagar, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "iKeva Powai",
+                "address": "Powai, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Matchbox Coworking",
+                "address": "Andheri West, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "TBL Space",
+                "address": "Balewadi, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Redbrick – Shivajinagar",
+                "address": "Shivajinagar, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Redbrick – Magarpatta",
+                "address": "Magarpetta, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "2499 Office",
+                "address": "Tagore Garden Extension, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Meraki Spaces",
+                "address": "Shivajinagar, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Coherent co-working",
+                "address": "Baner, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Mesh – Koregaon Park",
+                "address": "Koregaon Park, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Space",
+                "address": "Rachana Park, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "One Co.Work",
+                "address": "Connaught Place, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Peer Share Coworking",
+                "address": "Vasant Vihar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Share-A-Space",
+                "address": "Aundh, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Avanta Business Centre",
+                "address": "Barakhamba, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Reno Spaces",
+                "address": "Baner, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Starthub",
+                "address": "Koregaon Park, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "InCube",
+                "address": "Aundh, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Work Lab",
+                "address": "Aundh, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Work Lab",
+                "address": "Model Colony, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workolab",
+                "address": "Pusa Road, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workly",
+                "address": "Lajpat Nagar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "myDesk",
+                "address": "KG Marg, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "ABL Workspaces",
+                "address": "Green Park Extension, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "22 Workspace",
+                "address": "Asaf Ali Rd, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Maker’s Asylum",
+                "address": "Malviya Nagar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Startup Tunnel Coworking",
+                "address": "Chattarpur, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Delhi Co",
+                "address": "Shahpur Jat, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "So Share",
+                "address": "Shahpur, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "1share office",
+                "address": "East of Kailash, New Delh",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "NCR Urban Hive Spaces",
+                "address": "Green Park Extension, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Hatch101",
+                "address": "Badarpur, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Myinstapass Coworking",
+                "address": "Hauz Khas, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Founders Café",
+                "address": "Okhla Industrial Area, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Aboard Offices",
+                "address": "Dwarka, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "eTribe Coworking",
+                "address": "Mayur Vihar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoworkIn Lajpat Nagar",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91 Springboard Nehru Place",
+                "address": "Nehru Place, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Awfis Qutab Institutional Area A16",
+                "address": "Qutab Institutional Area, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "GoHive",
+                "address": "Ghitorni, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Greendesks",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Stirring Minds",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Empowerers Co-Working",
+                "address": "Yusuf Sarai, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Innov8 Coworking CP",
+                "address": "Connaught Place, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "ProWorkIn",
+                "address": "Sant nagar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoworkIn Nehru Place",
+                "address": "Nehru Place, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Daftar",
+                "address": "Baner Road, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "TRIOS Coworking",
+                "address": "Balewadi, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "TRIOS Coworking",
+                "address": "Viman Nagar, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "TRIOS Coworking",
+                "address": "Baner, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Hub",
+                "address": "Karve Rd, Mayur Colony, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Excella",
+                "address": "Laxman Nagar, Baner, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Collabworks Carter Road",
+                "address": "Carter Road, Bandra, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Collabworks",
+                "address": "The Cuckoo Club, Bandra, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Ultimate Arena",
+                "address": "Andheri, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Teal House",
+                "address": "Andheri, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Innov8 Andheri",
+                "address": "Boston House, Andheri, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cohive Coworking",
+                "address": "Karve Road, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Divine Coworking",
+                "address": "Baner, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cowork studio",
+                "address": "Viman Nagar, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bootstart – Varsha Park",
+                "address": "Varsha Park, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bootstart Koregaon Park",
+                "address": "Koregaon Park, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bootstart – Kalyani Nagar",
+                "address": "Kalyani Nagar - Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bootstart – Baner RD",
+                "address": "Baner Road, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bootstart – Bavdhan",
+                "address": "Bavdhan, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Smartworks – Yerwada",
+                "address": "Yerwada - Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Smartworks – Baner",
+                "address": "Baner, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Smartworks – Baner ACTP",
+                "address": "Baner ACTP, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Smartworks",
+                "address": "Magarpatta City, Pune",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Empire Business Centre",
+                "address": "Lower Parel, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Servcorp",
+                "address": "Bandra Kurla Complex, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "DBS House Fort",
+                "address": "Prescot Rd, fort, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "DBS Office",
+                "address": "Andheri East, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Boardroom",
+                "address": "Malad West, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Coworkyard Andheri",
+                "address": "Andheri East, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Up in the Air",
+                "address": "Dubash Marg, Ford, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Quest Offices",
+                "address": "Bandra Kurla Complex, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Hustle Cowork",
+                "address": "Anand Vihar, New Delhi",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "YesssWorks Palm Beach",
+                "address": "Palm Beach RD, Navi Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Spacewhiz Saint John Baptist",
+                "address": "Bandra West, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "AccessWork Malad West",
+                "address": "Malad West, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "AccessWork Powai",
+                "address": "Powai, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Access Kalina BKC",
+                "address": "Kalina BKC, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "YesssWorks BKC",
+                "address": "Kurla West, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "603 Powai",
+                "address": "Powai, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Access Vikhroli",
+                "address": "Vikhroli, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "SOS Sakinaka",
+                "address": "Andheri East, Sakinaka,Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Co.Lab.Oratory asia",
+                "address": "kurla Road, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Divine Hub",
+                "address": "Andheri East, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Blue Mushroom",
+                "address": "Malad West, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Clearspaces",
+                "address": "Andheri East, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Regus",
+                "address": "Goregaon East, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "G-Corp Media",
+                "address": "Andheri East, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Tasmac Business Centre",
+                "address": "Andheri West, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Beesquare",
+                "address": "Thane Belapur Road, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Arth Coworking",
+                "address": "Senapati Bapat Marg, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "OfficeSpace Lokhandwala",
+                "address": "Off Link Road, Mumbai",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "ZoomStart India",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard Navi Mumbai",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard Lotus",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CfE Offices",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Coworking Central Suburbs",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "JITO Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Millennial Pod",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workafella",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Dhinchak Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "MyKopcha",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Office Space",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "wegrow",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Access Andheri East",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Hour Space",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Smartworks",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Deodhar Workspace",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Orbit Plaza",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Redbrick powai",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Redbrick BKC",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Spacewhiz New Link Road",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Spacewhiz JP Road",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Connections Co-Working",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Rise Co – Working",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cowrks Worli",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cowrks Powai",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The A Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Evita",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Garage Co-Working",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Dextrus",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Arch N Rock",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Maker’s Asylum",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "at101 Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Kontor Space",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cowrks Worli",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cowrks Powai",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The A Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Evita",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Garage Co-Working",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Dextrus",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Arch N Rock",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Maker’s Asylum",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "at101 Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Kontor Space",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WorkAmp 59",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WorkAmp Estate",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Of10 Cowoking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Vorq Space Andheri",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Vorq Space",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Innov8 Vikhroli",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bluespace Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "IShareSpace",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Geekout",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Harkat Studios",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Ministry of New",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Garage Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WeWork Vaswani Chambers",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WeWork Oberoi Commerz II",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WeWork Marol",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Playce",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Mascots Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard BKC",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Mosaic Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WorkLoft",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cowork Garage",
+                "address": "HSR Layout, Bengaluru ",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Octavius Coworking",
+                "address": "Kudlu Gate, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Boutik Stay Coworking",
+                "address": "Whitefield, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Invertree Shared Offices",
+                "address": "Sector 7, HSR Layout, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cowork@35/2",
+                "address": "Cooke Town, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Share Studio",
+                "address": "Sadashivnagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "InCubes Coworking",
+                "address": "Brookefield, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Sky Offices",
+                "address": "Museum Road, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bangalore Alpha Lab",
+                "address": "JP Nagar 2nd Phase, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bangalore Best",
+                "address": "Langford Gardens, Bangalore",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Spacelance HSR",
+                "address": "HSR Layout, Sector 1, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WorkPod",
+                "address": "JP Nagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "ClayWorks CBD",
+                "address": "Ashok Nagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "AKH Infomedia Solutions",
+                "address": "Lingarajpuram, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Bohemian House",
+                "address": "Richmond Town, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "DBS House",
+                "address": "Cunningham Road, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "NUMA Coworking",
+                "address": "Ashok Nagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Upstart Coworking",
+                "address": "Whitefield, Brooke Bond First Cross, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workmatterz",
+                "address": "HRBR Layout 1st Block, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Quest Offices",
+                "address": "MG Road, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Next Space",
+                "address": "HSR Layout, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Evoma EPIP Zone",
+                "address": "EPIP Zone Whitefield, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Square one",
+                "address": "Indiranagar, Bengaluru,",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Evoma KR Puram",
+                "address": "K R Puram, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Evoma Marathahalli",
+                "address": "Marathahalli, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Lorven Coworks",
+                "address": "Jayanagar 4th Block, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Classic Converge",
+                "address": "5th Phase, JP Nagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Co – start Hub Coworking",
+                "address": "Sanjaynagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Prime Coworking",
+                "address": "koramangala, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bangalore Coworking Hub",
+                "address": "Kodihalli, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WorkWise",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Redbrick Offices",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Awfis ORR",
+                "address": "Kadubeesanahalli, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Gospace Coworking",
+                "address": "Whitefield, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Happy Coworks",
+                "address": "HSR Layout, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Vybrant Coworks",
+                "address": "BTM stage1, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bhive Workspace Koramangala",
+                "address": "Koramangala 6th block, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bhive Workspace Residency Road",
+                "address": "Richmond Town, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Urban Vault Indiranagar",
+                "address": "Kodihalli, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bhive Workspace Indiranagar",
+                "address": "Indiranagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Awfis Whitefield",
+                "address": "Whitefield, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Hive Coworking",
+                "address": "ITPL Main Road, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "iKeva Coworking",
+                "address": "Marathahalli ORR, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cowrks  Koramangala",
+                "address": "Koramangala, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Inspire Jayanagar",
+                "address": "Jayanagar 7th Block, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Kokarya Business Synergy Centre",
+                "address": "Jayanagara 9th Block, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Trik Traffic Coworking",
+                "address": "Domlur, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "PRI Co working Hub",
+                "address": "Jp Nagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "V Converge",
+                "address": "HSR Layout, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Startupin",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Gyan Space",
+                "address": "Electronic City, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "B Station",
+                "address": "St Marks Road, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Work ‘n’ Space",
+                "address": "OMBR Layout, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Gopalan Coworks Indiranagar",
+                "address": "Nagavarapalya, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Instasquares Business Center",
+                "address": "Jayanagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Sierra Cartel",
+                "address": "Pulikeshi Nagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Sierra Cartel HRBR",
+                "address": "HRBR Layout, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Sierra Cartel HSR",
+                "address": "HSR layout, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Starttopia Coworking",
+                "address": "BTM Layout, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Accilerator Marathahalli",
+                "address": "Silver Springs Layout, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "IKP Eden",
+                "address": "Tavarekere Main Rd, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bootstart CoWorking",
+                "address": "Raj Mahal Vilas 2nd Stage, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "The Circular Square",
+                "address": "Doddakalansandra, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Unispace Business Center",
+                "address": "Kudlu Gate, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Intide Space",
+                "address": "J.P.Nagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "365 shared space Indiranagar",
+                "address": "Indiranagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Hustle hub Co-working",
+                "address": "HSR Layout, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Muse Hub Coworking",
+                "address": "Marathahalli, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Le BURROW coworking",
+                "address": "Uttarahalli, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "HOFIS Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cubic Business Centre",
+                "address": "Koramangala 3 Block, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Co start hub",
+                "address": "Sanjaynagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Davanam Golden Square Prime",
+                "address": "Koramangala, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "My WorkArea",
+                "address": "Sheshadripuram, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "365 shared spaces HSR",
+                "address": "HSR Layout, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Investopad",
+                "address": "4th Block, Koramangala, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WeWork Galaxy",
+                "address": "Ashok Nagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Rainmakers Workspace",
+                "address": "MG Road, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Candor HUB",
+                "address": "MG Road, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "HOFIS Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cubic Business Centre",
+                "address": "Koramangala 3 Block, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Co start hub",
+                "address": "Sanjaynagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Davanam Golden Square Prime",
+                "address": "Koramangala, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "My WorkArea",
+                "address": "Sheshadripuram, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "365 shared spaces HSR",
+                "address": "HSR Layout, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Investopad",
+                "address": "4th Block, Koramangala, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WeWork Galaxy",
+                "address": "Ashok Nagar, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Rainmakers Workspace",
+                "address": "MG Road, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Candor HUB",
+                "address": "MG Road, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "IndiQube Zeta",
+                "address": "Hubali, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "IndiQube Omega",
+                "address": "ITPL Main Road,, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Newbridge Business Centre",
+                "address": "Koramangala, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Fetchpod coworking",
+                "address": "6th Block, Ejipura, Bengaluru",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "IndiQube Garden",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "North Bangalore Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "High Calibre League Co-working",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Founder’s Cube",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "We Work Embassy TechVillage",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WeWork Vikhroli West",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bombay Connect",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WorkSquare Powai",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bloomdesk coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "603 Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Mumbai Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Work Square",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "iKeva BKC Annexe",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bangalore Alpha Lab – JP Nagar",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workshaala NR Tower",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoWrks – Ecoworld",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "One Co.Work",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "GreenBubbles Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WeWork Hebbal",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Sillicon Vally Business Centre",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Dialogues Cafe",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "IndiQube Sigma",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Indiqube Alpha",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Solo Cubes Koramangala",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Innov8 Koramangala",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "GoodWorks CoWork",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Social Offline – Church Street",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Novel Office MG road",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoWorkIndia",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "CoWrks – New Indiranagar",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Inspire Workplace",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Work-Adda CoWorking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Blank Space Bangalore",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Let’s Start Cowork Space",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard Indiranagar",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Spacelance Indiranagar",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Ixora Cowork",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Think Hub",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "WorkDen Indiranagar",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Deskhub Bangalore",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bangalore Alpha Lab",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Solo Cubes Co working and Reading place",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Sun Square Business Hub",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Ataura Coworking space",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Indiqube Delta",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bhive HSR S-6",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Commune Coworks",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bhive HSR S-4",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workspace MG Road",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Space-n-Desk",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard Koramangala 8th block",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard MG road",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Work IN",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Awfis Indiranagar",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Golden Square Business Centre VM",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Trinity Workspace",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Woodstock Business centre",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Workbench Projects",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Jaaga",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Vatika Business Centre &amp; Co-working Spaces",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Bizzhub Work Spaces",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Dreams@Work",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Beginest",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "My Work Area",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "IShareSpace – Residency Road",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Upstart Coworking",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "Cowork Cafe",
+                "address": "",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "91springboard Koramangala 7th Block",
+                "address": "Hosur Road",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            },
+            {
+                "name": "SparkPlug Coworks",
+                "address": "Koramangala, Bangalore",
+                "provider": "The Hacker Street",
+                "type": "cowork"
+            }
+        ];
     }
-    FacebookComponent.prototype.scrapperMyHQ = function () {
-        this.hackService.scrapperDataMyHQ({ locations: this.offices_myhq }).subscribe(function (resp) {
-            console.log(resp);
-        }, function (err) {
-            console.log(err);
-        });
-    };
-    FacebookComponent.prototype.getLocations = function () {
-        var _this = this;
-        this.hackService.getLocations({}).subscribe(function (resp) {
-            _this.locations = resp['result'];
-        }, function (err) {
-            console.log(err);
-        });
-    };
-    FacebookComponent.prototype.ngOnInit = function () { };
-    FacebookComponent.ctorParameters = function () { return [
-        { type: _services_hack_service__WEBPACK_IMPORTED_MODULE_2__["HackService"] },
-        { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
-    ]; };
-    FacebookComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-facebook',
-            template: __webpack_require__(/*! raw-loader!./facebook.component.html */ "./node_modules/raw-loader/index.js!./src/app/facebook/facebook.component.html"),
-            styles: [__webpack_require__(/*! ./facebook.component.css */ "./src/app/facebook/facebook.component.css")]
-        })
-    ], FacebookComponent);
-    return FacebookComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/services/hack.service.ts":
-/*!******************************************!*\
-  !*** ./src/app/services/hack.service.ts ***!
-  \******************************************/
-/*! exports provided: HackService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HackService", function() { return HackService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-
-
-
-var HackService = /** @class */ (function () {
-    function HackService(http) {
-        this.http = http;
-        this.url = 'https://facebook.registe.cf/api/hack/';
-    }
-    // url = 'http://localhost:4200/api/hack/'
-    HackService.prototype.login = function (data) {
-        return this.http.post(this.url + 'login', data);
-    };
-    HackService.prototype.pageCount = function () {
-        return this.http.get(this.url + 'page/count');
-    };
-    HackService.prototype.scrapperDataMyHQ = function (data) {
-        return this.http.post(this.url + 'scrapper/myhq', data);
-    };
-    HackService.prototype.scrapperDataSneed = function (data) {
-        return this.http.post(this.url + 'scrapper/sneed', data);
-    };
-    HackService.prototype.getLocations = function (parameters) {
-        return this.http.get(this.url + 'scrapper', { params: parameters });
-    };
-    HackService.prototype.pageCreation = function (data) {
-        console.log('2');
-        return this.http.post(this.url + 'page/count', data);
-    };
-    HackService.ctorParameters = function () { return [
-        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
-    ]; };
-    HackService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    ArrayData = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
             providedIn: 'root'
         })
-    ], HackService);
-    return HackService;
+    ], ArrayData);
+    return ArrayData;
 }());
 
 

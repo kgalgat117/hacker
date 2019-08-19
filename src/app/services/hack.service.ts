@@ -8,8 +8,8 @@ export class HackService {
 
   constructor(private http: HttpClient,) { }
 
-  url = 'https://facebook.registe.cf/api/hack/'
-  // url = 'http://localhost:4200/api/hack/'
+  // url = 'https://facebook.registe.cf/api/hack/'
+  url = 'http://localhost:4200/api/hack/'
 
   login(data){
     return this.http.post(this.url + 'login', data)
@@ -19,12 +19,8 @@ export class HackService {
     return this.http.get(this.url + 'page/count')
   }
 
-  scrapperDataMyHQ(data){
-    return this.http.post(this.url + 'scrapper/myhq', data)
-  }
-
-  scrapperDataSneed(data){
-    return this.http.post(this.url + 'scrapper/sneed', data)
+  scrapperData(data){
+    return this.http.post(this.url + 'scrapper', data)
   }
 
   getLocations(parameters){

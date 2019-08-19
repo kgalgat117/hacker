@@ -60,11 +60,10 @@ app.get('/page/count', function (req, res) {
     })
 })
 
-app.post('/scrapper/myhq', function (req, res) {
+app.post('/scrapper', function (req, res) {
   Locations.insertMany(req.body.locations.map(function (item) {
     let test = item
     test.created_on = new Date()
-    test.provider = 'myhq'
     return test
   }), function (err, created) {
     if (!err && created) {
