@@ -1,23 +1,38 @@
-<table class="uk-table uk-table-striped">
-  <thead>
-    <tr>
-      <th>S. No</th>
-      <th>Name</th>
-      <th>Address</th>
-      <th>Type</th>
-      <th>Provider</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let location of locations; let i = index">
-      <td>{{i + 1}}</td>
-      <td>{{location.name}}</td>
-      <td>{{location.address}}</td>
-      <td>{{location.type}}</td>
-      <td>{{location.provider}}</td>
-    </tr>
-  </tbody>
-</table>
-
-
-
+<div class="uk-grid" uk-grid>
+  <div class="uk-width-1-1 uk-grid" uk-grid>
+    <div>
+      <select (change)="change($event)" name="type" id="">
+        <option value="sharedesk">sharedesk</option>
+        <option value="nexdus">nexdus</option>
+        <option value="hackerstreet">hackerstreet</option>
+        <option value="myhq">myhq</option>
+        <option value="engage">engage</option>
+      </select>
+    </div>
+    <div>
+      <button [useExistingCss]="true" printSectionId="print-section" ngxPrint>print</button>
+    </div>
+  </div>
+  <div id="print-section" class="uk-width-1-1">
+    <table class="uk-table uk-table-striped">
+      <thead>
+        <tr>
+          <th>S. No</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Type</th>
+          <th>Provider</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let location of locations; let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{location.name}}</td>
+          <td>{{location.address}}</td>
+          <td>{{location.type}}</td>
+          <td>{{location.provider}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

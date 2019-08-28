@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HackService } from 'src/app/services/hack.service'
-
+import {NgxPrintModule} from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -20,6 +20,7 @@ import { HackService } from 'src/app/services/hack.service'
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    NgxPrintModule
   ],
   providers: [HackService],
   bootstrap: [AppComponent]
