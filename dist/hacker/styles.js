@@ -598,8 +598,8 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/aws/Desktop/hacker/src/styles.css */"./src/styles.css");
-module.exports = __webpack_require__(/*! /home/aws/Desktop/hacker/node_modules/uikit/dist/css/uikit.min.css */"./node_modules/uikit/dist/css/uikit.min.css");
+__webpack_require__(/*! /home/fql1/Desktop/hacker/src/styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! /home/fql1/Desktop/hacker/node_modules/uikit/dist/css/uikit.min.css */"./node_modules/uikit/dist/css/uikit.min.css");
 
 
 /***/ })

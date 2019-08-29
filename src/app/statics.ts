@@ -4107,9 +4107,131 @@ export class ArrayData {
     'ShareDesk Global Inc',
     'cobot',
     'Nexudus Ltd',
-    'eFlair'
+    'eFlair',
+    'digicuro'
   ]
-
+  Digicuro: Array<Object> = [
+    {
+      "name": "Workingdom",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "Co-Offiz",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "WIZworks",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "Pin For Cowork",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "MiQB",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "Your Own Space",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "Digicuro Meetings",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "InCube Cowork",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "Vorq Space",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "Office Beanz",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "Anant Raj Estate",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "603 The Coworking Space",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "Digicuro Guests",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "WorkDen",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "Glorious Cowork",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "Monitoring Committee Visitor Management",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "YesssWorks",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "Digicuro - Space Management Software",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "The Board Room",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    },
+    {
+      "name": "Digicuro Admin",
+      "address": "",
+      "type": "",
+      "provider": "Digicuro"
+    }
+  ]
   Enagage: Array<Object> = [
     {
       "name": "Engage",

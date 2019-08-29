@@ -52,7 +52,7 @@ module.exports = "<nav class=\"uk-navbar-container uk-box-shadow-small boundary 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"uk-grid\" uk-grid>\n  <div class=\"uk-width-1-1 uk-grid\" uk-grid>\n    <div>\n      <select (change)=\"change($event)\" name=\"type\" id=\"\">\n        <option value=\"sharedesk\">sharedesk</option>\n        <option value=\"nexdus\">nexdus</option>\n        <option value=\"hackerstreet\">hackerstreet</option>\n        <option value=\"myhq\">myhq</option>\n        <option value=\"engage\">engage</option>\n      </select>\n    </div>\n    <div>\n      <button [useExistingCss]=\"true\" printSectionId=\"print-section\" ngxPrint>print</button>\n    </div>\n  </div>\n  <div id=\"print-section\" class=\"uk-width-1-1\">\n    <table class=\"uk-table uk-table-striped\">\n      <thead>\n        <tr>\n          <th>S. No</th>\n          <th>Name</th>\n          <th>Address</th>\n          <th>Type</th>\n          <th>Provider</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor=\"let location of locations; let i = index\">\n          <td>{{i + 1}}</td>\n          <td>{{location.name}}</td>\n          <td>{{location.address}}</td>\n          <td>{{location.type}}</td>\n          <td>{{location.provider}}</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</div>"
+module.exports = "<div class=\"uk-grid\" uk-grid>\n  <div class=\"uk-width-1-1 uk-grid\" uk-grid>\n    <div>\n      <select (change)=\"change($event)\" name=\"type\" id=\"\">\n        <option value=\"sharedesk\">sharedesk</option>\n        <option value=\"nexdus\">nexdus</option>\n        <option value=\"hackerstreet\">hackerstreet</option>\n        <option value=\"myhq\">myhq</option>\n        <option value=\"engage\">engage</option>\n        <option value=\"digicuro\">digicuro</option>\n        <option value=\"all\">all</option>\n        <option value=\"common\">common</option>\n      </select>\n    </div>\n    <div>\n      <button [useExistingCss]=\"true\" printSectionId=\"print-section\" ngxPrint>print</button>\n    </div>\n    <div>\n      <button (click)=\"export()\">Export!</button>\n    </div>\n  </div>\n  <div id=\"print-section\" class=\"uk-width-1-1\">\n    <table class=\"uk-table uk-table-striped sjs-table\">\n      <thead>\n        <tr>\n          <th>S. No</th>\n          <th>Name</th>\n          <th>Address</th>\n          <th>Type</th>\n          <th>Provider</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor=\"let location of locations; let i = index\">\n          <td>{{i + 1}}</td>\n          <td>{{location.name}}</td>\n          <td>{{location.address}}</td>\n          <td>{{location.type}}</td>\n          <td>{{location.provider}}</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -290,7 +290,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _services_hack_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/hack.service */ "./src/app/services/hack.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var src_app_statics__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/statics */ "./src/app/statics.ts");
+/* harmony import */ var xlsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! xlsx */ "./node_modules/xlsx/xlsx.js");
+/* harmony import */ var xlsx__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(xlsx__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var src_app_statics__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/statics */ "./src/app/statics.ts");
+
 
 
 
@@ -301,20 +304,32 @@ let FacebookComponent = class FacebookComponent {
         this.arrayData = arrayData;
         this.hackService = hackService;
         this.router = router;
+        this.data = [[1, 2], [3, 4]];
+        this.wopts = { bookType: 'xlsx', type: 'array' };
+        this.fileName = 'SheetJS.xlsx';
         this.update_array = [];
         this.Sharedesk = this.arrayData.ShareDesk;
         this.Nexdus = this.arrayData.Nexdus;
         this.hackerStreet = this.arrayData.offices_thehackerstreet;
         this.myHQ = this.arrayData.offices_myhq;
         this.Engage = this.arrayData.Enagage;
+        this.Digicuro = this.arrayData.Digicuro;
+        this.xlsx_file_name = 'sharedesk';
         this.locations = [];
-        // this.getLocations()
-        // this.scrapper()
         this.locations = this.Sharedesk;
     }
+    export() {
+        /* generate worksheet */
+        const ws = xlsx__WEBPACK_IMPORTED_MODULE_4__["utils"].json_to_sheet(this.locations);
+        /* generate workbook and add the worksheet */
+        const wb = xlsx__WEBPACK_IMPORTED_MODULE_4__["utils"].book_new();
+        xlsx__WEBPACK_IMPORTED_MODULE_4__["utils"].book_append_sheet(wb, ws, this.xlsx_file_name);
+        /* save to file */
+        xlsx__WEBPACK_IMPORTED_MODULE_4__["writeFile"](wb, this.xlsx_file_name + '.xlsx');
+    }
     change(tot) {
-        console.log(tot);
         let to = tot.target.value;
+        this.xlsx_file_name = to;
         if (to == 'sharedesk') {
             this.locations = this.Sharedesk;
         }
@@ -330,6 +345,48 @@ let FacebookComponent = class FacebookComponent {
         else if (to == 'engage') {
             this.locations = this.Engage;
         }
+        else if (to == 'digicuro') {
+            this.locations = this.Digicuro;
+        }
+        else if (to == 'all') {
+            this.locations = [];
+            this.getAllLocations();
+        }
+        else if (to == 'common') {
+            this.newTable();
+        }
+    }
+    newTable() {
+        this.getAllLocations();
+        let new_data = [];
+        let total_length = this.locations.length;
+        for (let i = 0; i < total_length; i++) {
+            let index = new_data.findIndex(item => {
+                if (item['name'] == this.locations[i]['name']) {
+                    return true;
+                }
+                return false;
+            });
+            if (index == -1) {
+                new_data.push({
+                    name: this.locations[i]['name'],
+                    address: this.locations[i]['address'],
+                    type: this.locations[i]['type'],
+                    provider_array: [this.locations[i]['provider']],
+                    provider: this.locations[i]['provider']
+                });
+            }
+            else {
+                if (new_data[index]['provider_array'].indexOf(this.locations[i]['provider']) == -1) {
+                    new_data[index]['provider_array'].push(this.locations[i]['provider']);
+                    new_data[index]['provider'] = new_data[index]['provider'] + ',' + this.locations[i]['provider'];
+                }
+            }
+        }
+        this.locations = new_data;
+    }
+    getAllLocations() {
+        this.locations = this.locations.concat(this.hackerStreet, this.myHQ, this.Digicuro, this.Nexdus, this.Engage, this.Sharedesk);
     }
     scrapper() {
         this.hackService.scrapperData({ locations: this.update_array }).subscribe(resp => {
@@ -348,7 +405,7 @@ let FacebookComponent = class FacebookComponent {
     ngOnInit() { }
 };
 FacebookComponent.ctorParameters = () => [
-    { type: src_app_statics__WEBPACK_IMPORTED_MODULE_4__["ArrayData"] },
+    { type: src_app_statics__WEBPACK_IMPORTED_MODULE_5__["ArrayData"] },
     { type: _services_hack_service__WEBPACK_IMPORTED_MODULE_2__["HackService"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
 ];
@@ -4532,7 +4589,130 @@ let ArrayData = class ArrayData {
             'ShareDesk Global Inc',
             'cobot',
             'Nexudus Ltd',
-            'eFlair'
+            'eFlair',
+            'digicuro'
+        ];
+        this.Digicuro = [
+            {
+                "name": "Workingdom",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "Co-Offiz",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "WIZworks",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "Pin For Cowork",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "MiQB",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "Your Own Space",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "Digicuro Meetings",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "InCube Cowork",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "Vorq Space",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "Office Beanz",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "Anant Raj Estate",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "603 The Coworking Space",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "Digicuro Guests",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "WorkDen",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "Glorious Cowork",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "Monitoring Committee Visitor Management",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "YesssWorks",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "Digicuro - Space Management Software",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "The Board Room",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            },
+            {
+                "name": "Digicuro Admin",
+                "address": "",
+                "type": "",
+                "provider": "Digicuro"
+            }
         ];
         this.Enagage = [
             {
@@ -5747,8 +5927,41 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/aws/Desktop/hacker/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/fql1/Desktop/hacker/src/main.ts */"./src/main.ts");
 
+
+/***/ }),
+
+/***/ 3:
+/*!********************!*\
+  !*** fs (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 4:
+/*!************************!*\
+  !*** crypto (ignored) ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 5:
+/*!************************!*\
+  !*** stream (ignored) ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
 
 /***/ })
 
