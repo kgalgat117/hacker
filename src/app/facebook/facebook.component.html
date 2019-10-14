@@ -10,6 +10,8 @@
         <option value="digicuro">digicuro</option>
         <option value="all">all</option>
         <option value="common">common</option>
+        <option value="no cafe">No Cafe</option>
+        <option value="some check">Some Check</option>
       </select>
     </div>
     <div>
@@ -18,9 +20,12 @@
     <div>
       <button (click)="export()">Export!</button>
     </div>
+    <div>
+      <input type="file" (change)="import($event)" [(ngModel)]="file_upload" name="file_upload">
+    </div>
   </div>
   <div id="print-section" class="uk-width-1-1">
-    <table class="uk-table uk-table-striped sjs-table">
+    <!-- <table class="uk-table uk-table-striped sjs-table">
       <thead>
         <tr>
           <th>S. No</th>
@@ -37,6 +42,20 @@
           <td>{{location.address}}</td>
           <td>{{location.type}}</td>
           <td>{{location.provider}}</td>
+        </tr>
+      </tbody>
+    </table> -->
+    <table class="uk-table uk-table-striped sjs-table">
+      <thead>
+        <tr>
+          <th>S. No</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let location of nowheredata; let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{location}}</td>
         </tr>
       </tbody>
     </table>

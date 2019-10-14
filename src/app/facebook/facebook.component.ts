@@ -4,6 +4,7 @@ import { Router } from '@angular/router'
 import * as XLSX from 'xlsx';
 import { ArrayData } from 'src/app/statics'
 
+
 type AOA = any[][];
 
 @Component({
@@ -25,16 +26,84 @@ export class FacebookComponent implements OnInit {
   myHQ: Array<Object> = this.arrayData.offices_myhq
   Engage: Array<Object> = this.arrayData.Enagage
   Digicuro: Array<Object> = this.arrayData.Digicuro
+  someCheck: Array<string> = this.arrayData.someCheck
   xlsx_file_name: string = 'sharedesk'
   locations: Array<Object> = []
 
+  nowheredata: Array<string> = []
+  testdata: Array<Object> = []
+
+  dummydata: any = {}
+  file_upload;
+
+
   constructor(private arrayData: ArrayData, private hackService: HackService, private router: Router) {
     this.locations = this.Sharedesk
+
+  }
+
+  import(event) {
+    let workBook = null;
+    let jsonData = null;
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    console.log('0')
+    reader.onload = (event) => {
+      const data = reader.result;
+      workBook = XLSX.read(data, { type: 'binary' });
+      jsonData = workBook.SheetNames.reduce((initial, name) => {
+        // console.log(initial, name, '1')
+        const sheet = workBook.Sheets[name];
+        // console.log(sheet, '2')
+        initial[name] = XLSX.utils.sheet_to_json(sheet);
+        return initial;
+      }, {});
+      this.dummydata = jsonData
+      this.makeData()
+      console.log(this.dummydata)
+    }
+    console.log('4')
+    reader.readAsBinaryString(file);
+  }
+
+  makeData() {
+    let data = this.dummydata.booking
+    for (let i = 0; i < data.length; i++) {
+      data[i].seat = {
+        amount: data[i]['seat.amount'],
+        quantity: data[i]['seat.quantity'],
+        name: data[i]['seat.name'],
+        floor: data[i]['seat.floor'],
+        duration: {
+          from: data[i]['seat.duration.from'],
+          to: data[i]['seat.duration.to']
+        }
+      }
+      if (data[i]['user_gst.gstin']) {
+        data[i].user_gst = {
+          gstin: data[i]['user_gst.gstin'],
+          line1: data[i]['user_gst.line1'],
+          line2: data[i]['user_gst.line2'],
+          line3: data[i]['user_gst.line3'],
+        }
+      }
+      delete data[i]['seat.amount']
+      delete data[i]['seat.quantity']
+      delete data[i]['seat.name']
+      delete data[i]['seat.floor']
+      delete data[i]['seat.duration.from']
+      delete data[i]['seat.duration.to']
+      delete data[i]['user_gst.gstin']
+      delete data[i]['user_gst.line1']
+      delete data[i]['user_gst.line2']
+      delete data[i]['user_gst.line3']
+    }
+    console.log(data)
   }
 
   export(): void {
     /* generate worksheet */
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.locations);
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.testdata);
 
     /* generate workbook and add the worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
@@ -64,7 +133,36 @@ export class FacebookComponent implements OnInit {
       this.getAllLocations()
     } else if (to == 'common') {
       this.newTable()
+    } else if (to == 'no cafe') {
+      this.noData()
+    } else if (to == 'some check') {
+      this.nowhere()
     }
+  }
+
+  nowhere() {
+    this.getAllLocations()
+    this.nowheredata = this.someCheck
+    this.locations.forEach(item => {
+      if (this.someCheck.indexOf(item['name']) != -1) {
+        this.nowheredata.splice(this.someCheck.indexOf(item['name']), 1)
+      }
+    })
+    this.nowheredata.forEach(item => {
+      this.testdata.push({
+        name: item
+      })
+    })
+  }
+
+  noData() {
+    this.getAllLocations()
+    this.locations = this.locations.filter(item => {
+      if (item['type'] == 'Coworking Space') {
+        return true
+      }
+      return false
+    })
   }
 
   newTable() {
