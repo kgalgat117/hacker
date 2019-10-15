@@ -85,6 +85,9 @@ export class FacebookComponent implements OnInit {
           line1: data[i]['user_gst.line1'],
           line2: data[i]['user_gst.line2'],
           line3: data[i]['user_gst.line3'],
+          pincode: data[i]['user_gst.pincode'],
+          state: data[i]['user_gst.state'],
+          city: data[i]['user_gst.city']
         }
       }
       delete data[i]['seat.amount']
@@ -97,6 +100,9 @@ export class FacebookComponent implements OnInit {
       delete data[i]['user_gst.line1']
       delete data[i]['user_gst.line2']
       delete data[i]['user_gst.line3']
+      delete data[i]['user_gst.pincode']
+      delete data[i]['user_gst.state']
+      delete data[i]['user_gst.city']
     }
     console.log(data)
   }
