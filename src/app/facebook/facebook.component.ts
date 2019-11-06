@@ -39,6 +39,32 @@ export class FacebookComponent implements OnInit {
 
   constructor(private arrayData: ArrayData, private hackService: HackService, private router: Router) {
     this.locations = this.Sharedesk
+    this.sneed()
+  }
+
+  sneed() {
+    function getData() {
+      let page_data = []
+      let name_html = document.getElementsByClassName('listing-row-title')
+      let address_html = document.getElementsByClassName('location-quality')
+      let tag = document.getElementsByClassName('listing-row-content')
+      for (let i = 0; i < name_html.length; i++) {
+        page_data.push({
+          name: name_html[i].children[0].innerHTML,
+          address: address_html[i].children[1].innerHTML,
+          provider: 'Sneed',
+          type: tag[i].children[1].innerHTML
+        })
+      }
+      console.log(page_data)
+      let load_more = document.getElementsByClassName('load-more')
+      if (load_more.length > 0) {
+        load_more[0].children[0].click()
+        setTimeout(function () {
+          getData()
+        }, 7000);
+      }
+    }
 
   }
 
@@ -69,40 +95,33 @@ export class FacebookComponent implements OnInit {
   makeData() {
     let data = this.dummydata.booking
     for (let i = 0; i < data.length; i++) {
-      data[i].seat = {
+      data[i].seat = [{
         amount: data[i]['seat.amount'],
         quantity: data[i]['seat.quantity'],
         name: data[i]['seat.name'],
+        clustername: data[i]['seat.clustername'],
         floor: data[i]['seat.floor'],
         duration: {
           from: data[i]['seat.duration.from'],
           to: data[i]['seat.duration.to']
         }
-      }
-      if (data[i]['user_gst.gstin']) {
-        data[i].user_gst = {
-          gstin: data[i]['user_gst.gstin'],
-          line1: data[i]['user_gst.line1'],
-          line2: data[i]['user_gst.line2'],
-          line3: data[i]['user_gst.line3'],
-          pincode: data[i]['user_gst.pincode'],
-          state: data[i]['user_gst.state'],
-          city: data[i]['user_gst.city']
-        }
-      }
+      }]
+      data[i].coworkers = [{
+        name: data[i]['coworkers.name'],
+        email: data[i]['coworkers.email'],
+        phone: data[i]['coworkers.phone'],
+      }]
+
       delete data[i]['seat.amount']
       delete data[i]['seat.quantity']
       delete data[i]['seat.name']
+      delete data[i]['seat.clustername']
       delete data[i]['seat.floor']
       delete data[i]['seat.duration.from']
       delete data[i]['seat.duration.to']
-      delete data[i]['user_gst.gstin']
-      delete data[i]['user_gst.line1']
-      delete data[i]['user_gst.line2']
-      delete data[i]['user_gst.line3']
-      delete data[i]['user_gst.pincode']
-      delete data[i]['user_gst.state']
-      delete data[i]['user_gst.city']
+      delete data[i]['coworkers.name']
+      delete data[i]['coworkers.email']
+      delete data[i]['coworkers.phone']
     }
     console.log(data)
   }
